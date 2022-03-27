@@ -1,0 +1,16 @@
+{
+  "name": "server",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "start": "node src/server.js"
+  },
+  "dependencies": {},
+  "devDependencies": {
+    "@types/node": "^17.0.23",
+    "eslint": "^8.12.0",
+    "eslint-config-hardcore": "^24.4.0",
+    "eslint-plugin-sort-keys-fix": "^1.1.2"
+  }
+}

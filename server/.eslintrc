@@ -1,0 +1,88 @@
+{
+  "env": {
+    "es2022": true,
+    "node": true
+  },
+  "extends": ["hardcore"],
+  "parserOptions": {
+    "ecmaVersion": 2022,
+    "sourceType": "module"
+  },
+  "plugins": ["sort-keys-fix"],
+  "rules": {
+    "complexity": "off",
+    "curly": ["error", "multi-or-nest"],
+    "func-style": ["error", "expression"],
+    "id-length": [
+      "error",
+      {
+        "exceptionPatterns": ["^_$"]
+      }
+    ],
+    "import/no-unused-modules": "off",
+    "import/prefer-default-export": "off",
+    "init-declarations": "off",
+    "max-statements": "off",
+    "new-cap": "off",
+    "no-console": "off",
+    "no-continue": "off",
+    "no-inline-comments": ["error", { "ignorePattern": "@type.+" }],
+    "no-magic-numbers": "off",
+    "putout/putout": "off",
+    "sonarjs/cognitive-complexity": "off",
+    "sort-keys-fix/sort-keys-fix": [
+      "error",
+      "asc",
+      {
+        "natural": true
+      }
+    ]
+  },
+  "overrides": [
+    {
+      "extends": ["hardcore/ts-for-js"],
+      "files": ["*.js", "*.cjs"],
+      "parserOptions": {
+        "project": "./jsconfig.json"
+      },
+      "rules": {
+        "@typescript-eslint/require-array-sort-compare": [
+          "error",
+          {
+            "ignoreStringArrays": true
+          }
+        ],
+        "@typescript-eslint/naming-convention": [
+          "error",
+          {
+            "selector": "default",
+            "format": ["strictCamelCase"],
+            "leadingUnderscore": "allow"
+          },
+          {
+            "selector": "function",
+            "format": ["strictCamelCase", "StrictPascalCase"]
+          },
+          {
+            "selector": ["typeLike", "enumMember"],
+            "format": ["StrictPascalCase"]
+          },
+          {
+            "selector": ["variable", "parameter", "property", "accessor"],
+            "types": ["boolean"],
+            "format": ["PascalCase"],
+            "prefix": ["is", "has", "are", "can", "should", "did", "will"]
+          }
+        ],
+        "@typescript-eslint/no-misused-promises": [
+          "error",
+          {
+            "checksVoidReturn": {
+              "arguments": false
+            }
+          }
+        ]
+      }
+    }
+  ]
+}
