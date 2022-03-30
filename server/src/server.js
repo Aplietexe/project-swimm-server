@@ -3,7 +3,7 @@ import express from "express"
 import cors from "cors"
 
 import apiRoutes from "./routes.js"
-import { createTwitClient } from "./twitter/client.js"
+import { createTwitClient } from "./twitter/index.js"
 
 const port = process.env.PORT ?? 5000
 
