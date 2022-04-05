@@ -1,3 +1,5 @@
+import { wordsToNumbers } from "words-to-numbers"
+
 /**
  * @typedef {import("twit").Twitter.Status} Status
  */
@@ -28,7 +30,11 @@ const processTweets = (tweets) => {
     // Stop looping if the current tweet is too old
     if (Date.parse(tweet.created_at) < lastMidnight) break
 
-    processed.push(filterCharacters(tweet.full_text))
+    const filtered = filterCharacters(tweet.full_text)
+
+    const converted = wordsToNumbers(filtered)
+
+    processed.push(typeof converted === "string" ? converted : filtered)
   }
 
   return processed
