@@ -24,7 +24,7 @@ router.get("/temperatures", async (_, res) => {
 
     const tweetsTemperatures = getTemperatures(tweetsTextsByPool)
 
-    const temperatures = addWbt(tweetsTemperatures)
+    const temperatures = await addWbt(tweetsTemperatures)
 
     res.json(temperatures)
     setCachedTemperatures(temperatures)
