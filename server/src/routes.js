@@ -5,11 +5,11 @@ import {
   setCachedTemperatures,
 } from "./cachedTemperatures.js"
 import {
-  getTemperature,
+  getTemperatures,
   getTweetsByPool,
-  processTweets,
+  processTweetsByPool,
 } from "./twitter/index.js"
-import getWbt from "./wbt.js"
+import addWbt from "./addWbt.js"
 
 const router = Router()
 
@@ -20,12 +20,11 @@ router.get("/temperatures", async (_, res) => {
   else {
     const tweetsByPool = await getTweetsByPool()
 
-    const tweetsTextsByPool = processTweets(tweetsByPool)
+    const tweetsTextsByPool = processTweetsByPool(tweetsByPool)
 
-    const temperatures = tweetsTextsByPool.map(({ pool, tweetsText }) => ({
-      pool,
-      temperature: getTemperature(tweetsText) ?? getWbt(),
-    }))
+    const tweetsTemperatures = getTemperatures(tweetsTextsByPool)
+
+    const temperatures = addWbt(tweetsTemperatures)
 
     res.json(temperatures)
     setCachedTemperatures(temperatures)

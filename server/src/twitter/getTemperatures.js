@@ -101,4 +101,13 @@ const getTemperature = (tweetsText) => {
   return undefined
 }
 
-export default getTemperature
+/**
+ * @param {{pool: string, tweetsText: string[]}[]} tweetsTextsByPool
+ */
+const getTemperatures = (tweetsTextsByPool) =>
+  tweetsTextsByPool.map(({ pool, tweetsText }) => ({
+    pool,
+    temperature: getTemperature(tweetsText),
+  }))
+
+export default getTemperatures

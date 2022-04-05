@@ -14,29 +14,33 @@ const filterCharacters = (toFilter) =>
     .replace(/\s{2,}/gu, " ")
 
 /**
- * @param {{pool: string, tweets: Status[]}[]} tweetsByPool
- * @returns {{pool: string, tweetsText: string[]}[]}
+ * @param {Status[]} tweets
  */
-const processTweets = (tweetsByPool) =>
-  tweetsByPool.map(({ pool, tweets }) => {
-    const lastMidnight = new Date().setHours(0, 0, 0, 0)
+const processTweets = (tweets) => {
+  const lastMidnight = new Date().setHours(0, 0, 0, 0)
 
-    const processed = []
+  const processed = []
 
-    for (const tweet of tweets) {
-      // Twit doesn't guarantee that the tweet has a full_text property
-      if (!tweet.full_text) continue
+  for (const tweet of tweets) {
+    // Twit doesn't guarantee that the tweet has a full_text property
+    if (!tweet.full_text) continue
 
-      // Stop looping if the current tweet is too old
-      if (Date.parse(tweet.created_at) < lastMidnight) break
+    // Stop looping if the current tweet is too old
+    if (Date.parse(tweet.created_at) < lastMidnight) break
 
-      processed.push(filterCharacters(tweet.full_text))
-    }
+    processed.push(filterCharacters(tweet.full_text))
+  }
 
-    return {
-      pool,
-      tweetsText: processed,
-    }
-  })
+  return processed
+}
 
-export default processTweets
+/**
+ * @param {{pool: string, tweets: Status[]}[]} tweetsByPool
+ */
+const processTweetsByPool = (tweetsByPool) =>
+  tweetsByPool.map(({ pool, tweets }) => ({
+    pool,
+    tweetsText: processTweets(tweets),
+  }))
+
+export default processTweetsByPool
