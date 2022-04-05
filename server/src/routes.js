@@ -13,21 +13,25 @@ import addWbt from "./addWbt.js"
 
 const router = Router()
 
-router.get("/temperatures", async (_, res) => {
+router.get("/temperatures", async (_, res, next) => {
   const cachedTemperatures = getCachedTemperatures()
 
   if (cachedTemperatures) res.json(cachedTemperatures)
   else {
-    const tweetsByPool = await getTweetsByPool()
+    try {
+      const tweetsByPool = await getTweetsByPool()
 
-    const tweetsTextsByPool = processTweetsByPool(tweetsByPool)
+      const tweetsTextsByPool = processTweetsByPool(tweetsByPool)
 
-    const tweetsTemperatures = getTemperatures(tweetsTextsByPool)
+      const tweetsTemperatures = getTemperatures(tweetsTextsByPool)
 
-    const temperatures = await addWbt(tweetsTemperatures)
+      const temperatures = await addWbt(tweetsTemperatures)
 
-    res.json(temperatures)
-    setCachedTemperatures(temperatures)
+      res.json(temperatures)
+      setCachedTemperatures(temperatures)
+    } catch (error) {
+      next(error)
+    }
   }
 })
 
