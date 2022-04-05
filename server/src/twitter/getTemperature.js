@@ -10,53 +10,23 @@ const regexp =
   /(?:air\s)?(?:temperature\sis\s)?\d\d?(?:\.\d)?[º°]?C?(?:\sdegrees)?/gu
 
 /**
- * @param {string} toFilter
- */
-const filterCharacters = (toFilter) =>
-  toFilter
-    .replace(
-      /[\u2011-\u27BF\uE000-\uF8FF]|\uD83C[\uDC00-\uDFFF]|\uD83D[\uDC00-\uDFFF]|\uD83E[\uDD10-\uDDFF]/gu,
-      "",
-    )
-    .replace(/\s{2,}/gu, " ")
-
-/**
- * @param {Status[]} tweets
+ * @param {string[]} tweetsText
  * @returns {TweetMatches}
  */
-const getAllMatches = (tweets) => {
-  // const lastMidnight = new Date().setHours(0, 0, 0, 0)
-
-  const allMatches = []
-
-  for (const tweet of tweets) {
-    // Stop looping if the current tweet is too old
-    // const created = Date.parse(tweet.created_at)
-
-    // if (created < lastMidnight) break
-
-    // Twit doesn't guarantee that the tweet has a full_text property
-    if (!tweet.full_text) continue
-
-    // Extract potential temperatures
-    const tweetMatches = filterCharacters(tweet.full_text).matchAll(regexp)
+const getAllMatches = (tweetsText) =>
+  tweetsText.map((tweetText) => {
+    const tweetMatches = tweetText.matchAll(regexp)
 
     const results = Array.from(tweetMatches, (result) => result[0])
 
     const isValued =
-      tweet.full_text.includes("degrees") ||
-      tweet.full_text.includes("temperature")
+      tweetText.includes("degrees") || tweetText.includes("temperature")
 
-    const tweetMatch = {
+    return {
       isValued,
       results,
     }
-
-    allMatches.push(tweetMatch)
-  }
-
-  return allMatches
-}
+  })
 
 /**
  * @param {TweetMatches} allMatches
@@ -102,10 +72,10 @@ const parseTemperature = (match) =>
 const capTemperature = (temperature) => temperature <= 28
 
 /**
- * @param {Status[]} tweets
+ * @param {string[]} tweetsText
  */
-const processTweets = (tweets) => {
-  const allMatches = removeAirTemperature(getAllMatches(tweets))
+const getTemperature = (tweetsText) => {
+  const allMatches = removeAirTemperature(getAllMatches(tweetsText))
 
   const bestMatches = getBestMatches(allMatches)
 
@@ -127,17 +97,6 @@ const processTweets = (tweets) => {
     .find(capTemperature)
 
   if (floatTemperature) return floatTemperature
-
-  return undefined
-}
-
-/**
- * @param {Status[]} tweets
- */
-const getTemperature = (tweets) => {
-  const temperature = processTweets(tweets)
-
-  if (temperature) return temperature
 
   return undefined
 }
