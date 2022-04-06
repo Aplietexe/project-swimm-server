@@ -9,7 +9,13 @@ import {
   getTweetsByPool,
   processTweetsByPool,
 } from "./twitter/index.js"
-import addWbt from "./addWbt.js"
+import addWeatherTemperature from "./addWeatherTemperature.js"
+
+/**
+ * @typedef {object} Response
+ * @property {number} weatherTemperature
+ * @property {{pool: string, temperature: number}[]} poolTemperatures
+ */
 
 const router = Router()
 
@@ -25,7 +31,8 @@ router.get("/temperatures", async (_, res, next) => {
 
       const tweetsTemperatures = getTemperatures(tweetsTextsByPool)
 
-      const temperatures = await addWbt(tweetsTemperatures)
+      /** @type {Response} */
+      const temperatures = await addWeatherTemperature(tweetsTemperatures)
 
       res.json(temperatures)
       setCachedTemperatures(temperatures)

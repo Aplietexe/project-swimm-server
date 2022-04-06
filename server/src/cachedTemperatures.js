@@ -1,4 +1,8 @@
-/** @type {{data?:{pool: string, temperature: number}[], expires: number}} */
+/**
+ * @typedef {import("./routes").Response} Response
+ */
+
+/** @type {{data?: Response, expires: number}} */
 const cache = {
   expires: 0,
 }
@@ -10,7 +14,7 @@ const getCachedTemperatures = () => {
 }
 
 /**
- * @param {{pool: string, temperature: number}[]} newData
+ * @param {Response} newData
  */
 const setCachedTemperatures = (newData) => {
   cache.data = newData
