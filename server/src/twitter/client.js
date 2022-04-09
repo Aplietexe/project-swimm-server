@@ -3,6 +3,12 @@ import Twit from "twit"
 /** @type {Twit | undefined} */
 let twitClient
 
+/**
+ * Create the Twit client from env variables and store it.
+ *
+ * If any of the required variables are missing and the client can't be
+ * instantiated, print a message to the console.
+ */
 const createTwitClient = () => {
   /* eslint-disable @typescript-eslint/naming-convention */
   /* eslint-disable camelcase */
@@ -29,6 +35,10 @@ const createTwitClient = () => {
   }
 }
 
+/**
+ * Return the Twit client if there is one, throw an error otherwise.
+ * @returns {Twit}
+ */
 const getTwitClient = () => {
   if (!twitClient) throw new Error("Error retrieving Twit client")
 

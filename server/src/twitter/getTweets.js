@@ -6,6 +6,9 @@ import pools from "./pools.js"
  */
 
 /**
+ * Retrieve the last 20 tweets from the passed Twitter handle and return them as
+ * an array.
+ *
  * @param {string} handle
  * @returns {Promise<Status[]>}
  */
@@ -29,6 +32,13 @@ const getTweetsFromHandle = async (handle) => {
   return /** @type {Status[]} */ (data)
 }
 
+/**
+ * Loop over all the pools in pools.js and fetch the tweets from their twitter
+ * accounts. Return an array with an object per pool that contains it's name and
+ * tweets.
+ *
+ * @returns {Promise<{pool: string, tweets: Status[]}[]>}
+ */
 const getTweetsByPool = async () => {
   const handles = pools.map((pool) => pool.handle)
 
