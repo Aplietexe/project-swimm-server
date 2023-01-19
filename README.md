@@ -1,5 +1,14 @@
 # project-swimm-server
 
+![Express](https://img.shields.io/badge/Made_with-Express.js-000000?style=for-the-badge&logo=express&labelColor=white&logoColor=000000)
+![Node](https://img.shields.io/badge/Made_with-Node.js-339933?style=for-the-badge&logo=node.js&labelColor=white)
+![Twitter API](https://img.shields.io/badge/Made_with-Twitter_API-1DA1F2?style=for-the-badge&logo=twitter&labelColor=white)
+![JavaScript](https://img.shields.io/badge/Made_with-JavaScript-F0DB4F?style=for-the-badge&logo=javascript&labelColor=white)
+
+![TypeScript](https://img.shields.io/badge/Lint-typescript-3178C6?style=for-the-badge&logo=typescript&labelColor=white)
+![ESLint](https://img.shields.io/badge/Lint-ESLint-4B32C3?style=for-the-badge&logo=eslint&labelColor=white&logoColor=4B32C3)
+![Prettier](https://img.shields.io/badge/code_style-Prettier-F7B93E?style=for-the-badge&logo=prettier&labelColor=white)
+
 A project I did as a freelancer which consists of an endpoint that returns the
 temperatures of several pools in London.
 
